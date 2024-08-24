@@ -1,0 +1,45 @@
+Install and setup kops for kubernetes
+
+Requirements 
+godaddy domain mine = tannudon.shop
+
+create a vm on ubuntu 22 t2.micro 
+create a Route 53 Hosted zone like kubevpro.tannudon.shop
+copy NS record from route53 to godaddy records 
+create a S3 bucket 
+create a user and create access key and assign them to ubuntu vm using 
+
+
+# Configure access keys
+aws configure 
+
+## Install and configure kubectl on linux
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl
+sudo mv kubectl  /usr/local/bin/
+kubectl --help
+
+## Install and configure kops on linux 
+wget https://github.com/kubernetes/kops/releases/download/v1.26.4/kops-linux-amd64
+chmod +x kops-linux-amd64
+mv kops-linux-amd64 /usr/local/bin/kops
+kops version
+
+## verify domain is working on new NS records
+nslookup -type=ns kubevpro.tannudon.shop
+
+
+# kops create cluster by commands
+kops create cluster --name=kubevpro.tannudon.shop \ 
+--state=s3://vprofile-kops-setup --zones=us-east-2a,us-east-2b \ 
+--node-count=2 --node-size=t3.small --master-size=t3.medium --dns-zone=kubevpro.tannudon.shop \ 
+--node-volume-size=12 --master-volume-size=12
+
+kops update cluster --name kubevpro.groophy.in --state=s3://vprofile-kop-states --yes --admin
+kops validate cluster --name kubevpro.groophy.in 
+
+kops delete cluster --name kubevpro.groophy.in --state=s3://vprofile-kop-states --yes --admin
+
+
+
+
