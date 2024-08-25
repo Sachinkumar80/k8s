@@ -1,0 +1,19 @@
+In Kubernetes, objects are persistent entities that represent the state of your cluster. They define the desired state of various resources and components within the Kubernetes environment. These objects are defined in YAML or JSON files and then applied to the cluster using commands like kubectl apply. The Kubernetes control plane continually works to ensure that the current state of the objects matches the desired state.
+
+Here are some common Kubernetes objects:
+
+Pod: The smallest and simplest Kubernetes object. A Pod represents a single instance of a running process in your cluster and usually contains one or more containers.
+
+Service: An object that defines a logical set of Pods and a policy by which to access them. Services allow Kubernetes to expose Pods to the network, either within the cluster or externally.
+
+Deployment: A higher-level object that manages the creation and scaling of Pods. Deployments ensure that a specified number of Pods are always running and are the same as the desired state.
+
+ReplicaSet: Ensures that a specified number of Pod replicas are running at any given time. Deployments use ReplicaSets to manage the number of Pods.
+
+ConfigMap: An object used to inject configuration data into containers at runtime.
+
+Secret: Similar to ConfigMap, but designed to handle sensitive information, such as passwords, OAuth tokens, and SSH keys.
+
+Namespace: A way to divide cluster resources between multiple users or teams. Namespaces provide a scope for names and are useful in large deployments.
+
+PersistentVolume (PV) and PersistentVolumeClaim (PVC): Objects that manage storage in Kubernetes. PVs represent a piece of storage in the cluster, and PVCs request storage resources.
